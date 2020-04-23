@@ -1,0 +1,38 @@
+transmitter
+	finite buffer: holds packets to be transmitted into link
+	link processor: transmits packets into link
+		packets arrive randomly
+		time between packets follows distribution function
+		time to transmit a packet depends on its size
+
+	2 cases
+		1. transmitter is idle (0 packets)
+			arriving packet given to link processor
+			link processor transmits packet
+		2. transmitter is busy transmitting another packet & there are 0 or more packets waiting in buffer
+			packet queued in buffer
+			while (buffer not empty)
+				lp retrieves 1 packet at a time from buffer in fifo order, transmits to link
+
+discrete event simulation
+	given
+		packet inter-arrival times
+		distribution of packet transmission times
+	find
+		avg number of packets in buffer
+		total num of dropped packets (buffer is full)
+		% of time link processor is busy (not idle) = link processor utilization
+	time proceeds in dicrete steps associated w key events
+	the events
+		arrival of packet
+		departure of packet
+
+queue
+	MAXBUFFER max packets (can be infinite)
+	only 1 arrival at a time
+	inter-arrival time follows negative exponential dist with rate lambda packets/second
+
+server
+	transmits 1 packet at a time (fifo)
+	packet length varies & transmission time varies
+	transmission time is neg ex dist with rate mu packets/second
