@@ -1,6 +1,7 @@
 
 from collections import deque
 from enum import Enum
+import linkedlist
 
 ARRIVAL = 0
 DEPARTURE = 1
@@ -49,6 +50,6 @@ class SingleServerQueue:
 				print ("hey")
 
 
-	def processArival(arg):
+	def processArrival(arg):
 		curr_time = event_time
 		if ()
