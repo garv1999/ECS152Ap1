@@ -53,15 +53,17 @@ class SingleServerQueue:
 		self.add_to_gel(next_arrival_event)
 
 		if (len(self.buffer) == 0):
+			print("buffer is empty")
 			departure_event = Event(self.time + event.service_time, event.service_time, DEPARTURE)
 			self.add_to_gel(departure_event)
 		else:
-			++server_busy_time
+			server_busy_time += 1
 			if (len(self.buffer) == MAXBUFFER):
-				++packets_dropped # the queue is full and therefore the packet is dropped
+				print("buffer is full")
+				packets_dropped += 1 # the queue is full and therefore the packet is dropped
 			else:
+				print("buffer is not full")
 				self.buffer.append(event)
-
 				self.sum_queue_length += len(self.buffer)
 				self.mean_queue_length = float(sum_queue_length) / float(self.time)
 				self.mean_server_util = float(server_busy_time) / float(self.time)
@@ -83,24 +85,18 @@ class SingleServerQueue:
 			self.mean_queue_length = float(self.sum_queue_length) / float(self.time)
 
 # main functions
-server = SingleServerQueue(0.3, 20)
-print(server.gel.head.data.event_time)
-arrival_count = 0
-departure_count = 0
+server = SingleServerQueue(0.2, 1)
 
-for i in range(100000):
+for i in range(10000):
 	nextEvent = server.gel.head.data
 	server.gel.remove_node(nextEvent)
 	# same are transmission time for an event or size for a baguette
 	if (nextEvent.event_type == ARRIVAL):
-		++arrival_count
 		server.process_arrival(nextEvent)
 	else:
-		++departure_count
 		server.process_departure(nextEvent)
 
-print(arrival_count, " arrivals")
-print(departure_count, " departures")
+print(server.server_busy_time)
 print(server.mean_queue_length)
 print(server.mean_server_util)
 print(server.packets_dropped)
