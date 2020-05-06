@@ -40,14 +40,12 @@ class SingleServerQueue:
 	def add_to_gel(event):
 		if (gel.is_empty):
 			gel.add_first(Node(event))
-			return
-		else if (gel.tail.data.event_time <= event.event_time):
+		elif (gel.tail.data.event_time <= event.event_time):
 			gel.add_last(Node(event))
-			return
-
-		for e in iter(gel):
-			if (e.data.event_time > event.event_time):
-				gel.add_before(e.data, Node(event))
+		else:
+			for e in iter(gel):
+				if (e.data.event_time > event.event_time):
+					gel.add_before(e.data, Node(event))
 
 	def process_arrival(event):
 		time = event.event_time
