@@ -50,7 +50,7 @@ class SingleServerQueue:
 		next_arrival_time = self.time + exponential_random(self.lam)
 		next_service_time = exponential_random(self.mu)
 		next_arrival_event = Event(next_arrival_time, next_service_time, ARRIVAL)
-		self.add_to_gel(new_arrival_event)
+		self.add_to_gel(next_arrival_event)
 
 		if (len(buffer) == 0):
 			departure_event = Event(self.time + event.service_time, event.service_time, DEPARTURE)
