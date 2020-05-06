@@ -3,7 +3,7 @@
 
 class Node:
     def __init__(self, data):
-        self.data = data
+		self.data = data
         self.next = None
 		self.prev = None
 
@@ -13,10 +13,12 @@ class Node:
 class LinkedList:
     def __init__(self, nodes=None):
 	    self.head = None
+		self.tail = None
 	    if nodes is not None:
-	        node = Node(data=nodes.pop(0))
-	        self.head = node
-			self.tail = node
+	        hnode = Node(data=nodes.pop(0))
+			tnode = Node(data=nodes.pop())
+	        self.head = hnode
+			self.tail = tnode if nodes.len() is 0 else hnode
 	        for elem in nodes:
 	            node.next = Node(data=elem)
 				node.next.prev = node
@@ -81,5 +83,30 @@ class LinkedList:
 	            new_node.next = node
 	            return
 	        prev_node = node
+
+	    raise Exception("Node with data '%s' not found" % target_node_data)
+
+	def is_empty(self):
+		return self.head is None
+
+	def remove_node(self, target_node_data):
+	    if not self.head:
+	        raise Exception("List is empty")
+
+	    if self.head.data == target_node_data:
+	        self.head = self.head.next
+	        return
+
+		if self.tail.data == target_node_data:
+			self.tail = self.tail.prev
+			return
+
+	    previous_node = self.head
+	    for node in self:
+	        if node.data == target_node_data:
+	            previous_node.next = node.next
+				node.next.prev = previous_node
+	            return
+	        previous_node = node
 
 	    raise Exception("Node with data '%s' not found" % target_node_data)
