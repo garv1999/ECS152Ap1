@@ -46,41 +46,41 @@ class SingleServerQueue:
 					gel.add_before(e.data, Node(event))
 
 	def process_arrival(self, event):
-		time = event.event_time
-		next_arrival_time = time + exponential_random(self.lam)
+		self.time = event.event_time
+		next_arrival_time = self.time + exponential_random(self.lam)
 		next_service_time = exponential_random(self.mu)
 		next_arrival_event = Event(next_arrival_time, next_service_time, ARRIVAL)
 		self.add_to_gel(new_arrival_event)
 
 		if (len(buffer) == 0):
-			departure_event = Event(time + service_time, service_time, DEPARTURE)
+			departure_event = Event(self.time + event.service_time, event.service_time, DEPARTURE)
 			self.add_to_gel(departure_event)
 		else:
 			++server_busy_time
-			if (len(buffer) == MAXBUFFER):
+			if (len(self.buffer) == MAXBUFFER):
 				++packets_dropped # the queue is full and therefore the packet is dropped
 			else:
-				buffer.append(event)
+				self.buffer.append(event)
 
-				sum_queue_length += len(buffer)
-				mean_queue_length = sum_queue_length / time
-				mean_server_util = server_busy_time / time
+				self.sum_queue_length += len(self.buffer)
+				self.mean_queue_length = sum_queue_length / self.time
+				self.mean_server_util = server_busy_time / self.time
 
 	def process_departure(self, event):
-		time = event.event_time
-		mean_queue_length = sum_queue_length / time
-		mean_server_util = server_busy_time / time
+		self.time = event.event_time
+		self.mean_queue_length = self.sum_queue_length / self.time
+		self.mean_server_util = self.server_busy_time / self.time
 
-		if (len(buffer) > 0):
+		if (len(self.buffer) > 0):
 
-			departure_event = buffer.popLeft()
-			departure_event.event_time = time + departure_event.service_time
+			departure_event = self.buffer.popLeft()
+			departure_event.event_time = self.time + departure_event.service_time
 			departure_event.event_type = DEPARTURE
 
 			self.add_to_gel(departure_event)
 
-			sum_queue_length += len(buffer)
-			mean_queue_length = sum_queue_length / time
+			self.sum_queue_length += len(self.buffer)
+			self.mean_queue_length = self.sum_queue_length / self.time
 
 # main functions
 server = SingleServerQueue(0.2, 1)
