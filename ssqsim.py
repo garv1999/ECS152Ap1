@@ -37,7 +37,7 @@ class SingleServerQueue:
 		u = random()
 		return (-1/var)* log(1-u)
 
-	def add_to_gel(event):
+	def add_to_gel(self, event):
 		if (gel.is_empty):
 			gel.add_first(Node(event))
 		elif (gel.tail.data.event_time <= event.event_time):
@@ -47,7 +47,7 @@ class SingleServerQueue:
 				if (e.data.event_time > event.event_time):
 					gel.add_before(e.data, Node(event))
 
-	def process_arrival(event):
+	def process_arrival(self, event):
 		time = event.event_time
 		next_arrival_time = time + exponential_random(self.lam)
 		next_service_time = exponential_random(self.mu)
@@ -68,7 +68,7 @@ class SingleServerQueue:
 				mean_queue_length = sum_queue_length / time
 				mean_server_util = server_busy_time / time
 
-	def process_departure(event):
+	def process_departure(self, event):
 		time = event.event_time
 		mean_queue_length = sum_queue_length / time
 		mean_server_util = server_busy_time / time
