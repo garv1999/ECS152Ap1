@@ -1,6 +1,6 @@
 
 from collections import deque
-from numpy import random
+from math import log
 import linkedlist
 
 ARRIVAL = 0
@@ -24,13 +24,13 @@ class SingleServerQueue:
 		self.mean_server_util  = 0
 		self.mu 		       = 1
 		self.lam  			   = lam
-		self.time   	       = self.exponential_random(lam)
+		self.time   	       = exponential_random(lam)
 		self.packets_dropped   = 0
 		self.gel.add_first(Node(Event(self.time, ARRIVAL)))
 		self.gel = LinkedList()
 		self.buffer = deque(maxlen = MAXBUFFER)
 
-	#@staticmethod
+	@staticmethod
 	def exponential_random(var):
 		u = random()
 		return (-1/var)* math.log(1-u)
