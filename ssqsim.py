@@ -26,14 +26,14 @@ class SingleServerQueue:
 		self.mean_server_util  = 0
 		self.mu 		       = 1
 		self.lam  			   = lam
-		self.time   	       = self.exponential_random(lam)
+		self.time   	       = exponential_random(lam)
 		self.packets_dropped   = 0
 		self.gel = LinkedList()
-		self.gel.head = Node(Event(self.time, self.exponential_random(self.mu), ARRIVAL))
+		self.gel.head = Node(Event(self.time, exponential_random(self.mu), ARRIVAL))
 		self.buffer = deque(maxlen = MAXBUFFER)
 
 	@staticmethod
-	def exponential_random(self, var):
+	def exponential_random(var):
 		u = random()
 		return (-1/var)* log(1-u)
 
