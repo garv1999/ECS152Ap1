@@ -33,7 +33,7 @@ class SingleServerQueue:
 		self.buffer = deque(maxlen = MAXBUFFER)
 
 	@staticmethod
-	def exponential_random(var):
+	def exponential_random(self, var):
 		u = random()
 		return (-1/var)* log(1-u)
 
