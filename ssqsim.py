@@ -84,15 +84,22 @@ class SingleServerQueue:
 
 # main functions
 server = SingleServerQueue(0.3, 20)
+arrival_count = 0
+departure_count = 0
+
 for i in range(100000):
 	nextEvent = server.gel.head.data
 	server.gel.remove_node(nextEvent)
 	# same are transmission time for an event or size for a baguette
 	if (nextEvent.event_type == ARRIVAL):
+		++arrival_count
 		server.process_arrival(nextEvent)
 	else:
+		++departure_count
 		server.process_departure(nextEvent)
 
+print(arrival_count, " arrivals")
+print(departure_count, " departures")
 print(server.mean_queue_length)
 print(server.mean_server_util)
 print(server.packets_dropped)
