@@ -2,7 +2,8 @@
 from collections import deque
 from random import random
 from math import log
-import linkedlist
+#import linkedlist
+from linkedlist import *
 
 ARRIVAL = 0
 DEPARTURE = 1
