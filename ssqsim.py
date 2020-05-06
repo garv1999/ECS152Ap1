@@ -50,11 +50,11 @@ class SingleServerQueue:
 		next_arrival_time = time + exponential_random(self.lam)
 		next_service_time = exponential_random(self.mu)
 		next_arrival_event = Event(next_arrival_time, next_service_time, ARRIVAL)
-		add_to_gel(new_arrival_event)
+		self.add_to_gel(new_arrival_event)
 
 		if (len(buffer) == 0):
 			departure_event = Event(time + service_time, service_time, DEPARTURE)
-			add_to_gel(departure_event)
+			self.add_to_gel(departure_event)
 		else:
 			++server_busy_time
 			if (len(buffer) == MAXBUFFER):
@@ -77,7 +77,7 @@ class SingleServerQueue:
 			departure_event.event_time = time + departure_event.service_time
 			departure_event.event_type = DEPARTURE
 
-			add_to_gel(departure_event)
+			self.add_to_gel(departure_event)
 
 			sum_queue_length += len(buffer)
 			mean_queue_length = sum_queue_length / time
