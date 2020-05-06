@@ -1,5 +1,6 @@
 
 from collections import deque
+from random import random
 from math import log
 import linkedlist
 
