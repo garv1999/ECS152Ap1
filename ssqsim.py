@@ -84,6 +84,7 @@ class SingleServerQueue:
 
 # main functions
 server = SingleServerQueue(0.3, 20)
+print(server.gel.head.data.event_time)
 arrival_count = 0
 departure_count = 0
 
