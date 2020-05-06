@@ -10,7 +10,7 @@ DEPARTURE = 1
 
 def exponential_random(var):
 	u = random()
-	return (-1.0/float(var)) * log(1.0-u)
+	return (-1.0/float(var)) * log(1.0-float(u))
 
 class Event:
 	# default constructor
@@ -34,6 +34,7 @@ class SingleServerQueue:
 		self.gel = LinkedList()
 		self.gel.head = Node(Event(self.time, exponential_random(self.mu), ARRIVAL))
 		self.buffer = deque(maxlen = MAXBUFFER)
+		self.length = 0
 
 	def add_to_gel(self, event):
 		if (self.gel.is_empty):
@@ -53,30 +54,34 @@ class SingleServerQueue:
 		self.add_to_gel(next_arrival_event)
 
 		if (len(self.buffer) == 0):
-			print("buffer is empty")
+			self.length += 1
 			departure_event = Event(self.time + event.service_time, event.service_time, DEPARTURE)
 			self.add_to_gel(departure_event)
 		else:
-			server_busy_time += 1
-			if (len(self.buffer) == MAXBUFFER):
+			if (self.length - 1 < MAXBUFFER):
 				print("buffer is full")
 				packets_dropped += 1 # the queue is full and therefore the packet is dropped
 			else:
+				server_busy_time += event.service_time
 				print("buffer is not full")
+				self.length += 1
 				self.buffer.append(event)
-				self.sum_queue_length += len(self.buffer)
-				self.mean_queue_length = float(sum_queue_length) / float(self.time)
-				self.mean_server_util = float(server_busy_time) / float(self.time)
+
+		self.sum_queue_length += self.length
+		self.mean_queue_length = float(sum_queue_length) / float(self.time)
+		self.server_busy_time += event.service_time
+		self.mean_server_util = float(server_busy_time) / float(self.time)
 
 	def process_departure(self, event):
 		self.time = event.event_time
 		self.mean_queue_length = float(self.sum_queue_length) / float(self.time)
 		self.mean_server_util = float(self.server_busy_time) / float(self.time)
+		self.length -= 1
 
 		if (len(self.buffer) > 0):
 
 			departure_event = self.buffer.popLeft()
-			departure_event.event_time = self.time + departure_event.service_time
+			departure_event.event_time = self.time +  departure_event.service_time
 			departure_event.event_type = DEPARTURE
 
 			self.add_to_gel(departure_event)
@@ -85,12 +90,12 @@ class SingleServerQueue:
 			self.mean_queue_length = float(self.sum_queue_length) / float(self.time)
 
 # main functions
-server = SingleServerQueue(0.2, 1)
+server = SingleServerQueue(0.0001, 1)
 
-for i in range(10000):
+for i in range(10):
 	nextEvent = server.gel.head.data
-	server.gel.remove_node(nextEvent)
-	# same are transmission time for an event or size for a baguette
+	server.gel.remove_node(server.gel.head.data)
+	# same as transmission time for an event or size for a packet
 	if (nextEvent.event_type == ARRIVAL):
 		server.process_arrival(nextEvent)
 	else:
