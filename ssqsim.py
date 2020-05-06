@@ -52,7 +52,7 @@ class SingleServerQueue:
 		next_arrival_event = Event(next_arrival_time, next_service_time, ARRIVAL)
 		self.add_to_gel(next_arrival_event)
 
-		if (len(buffer) == 0):
+		if (len(self.buffer) == 0):
 			departure_event = Event(self.time + event.service_time, event.service_time, DEPARTURE)
 			self.add_to_gel(departure_event)
 		else:
