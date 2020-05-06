@@ -34,7 +34,7 @@ class SingleServerQueue:
 	@staticmethod
 	def exponential_random(var):
 		u = random()
-		return (-1/var)* math.log(1-u)
+		return (-1/var)* log(1-u)
 
 	def add_to_gel(event):
 		if (gel.is_empty):
