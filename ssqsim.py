@@ -36,14 +36,14 @@ class SingleServerQueue:
 		self.buffer = deque(maxlen = MAXBUFFER)
 
 	def add_to_gel(self, event):
-		if (gel.is_empty):
-			gel.add_first(Node(event))
-		elif (gel.tail.data.event_time <= event.event_time):
-			gel.add_last(Node(event))
+		if (self.gel.is_empty):
+			self.gel.add_first(Node(event))
+		elif (self.gel.tail.data.event_time <= event.event_time):
+			self.gel.add_last(Node(event))
 		else:
-			for e in iter(gel):
+			for e in iter(self.gel):
 				if (e.data.event_time > event.event_time):
-					gel.add_before(e.data, Node(event))
+					self.gel.add_before(e.data, Node(event))
 
 	def process_arrival(self, event):
 		self.time = event.event_time
