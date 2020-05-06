@@ -91,9 +91,9 @@ for i in range(100000):
 	server.gel.remove_node(nextEvent)
 	# same are transmission time for an event or size for a baguette
 	if (nextEvent.event_type == ARRIVAL):
-		process_arrival(nextEvent)
+		server.process_arrival(nextEvent)
 	else:
-		process_departure(nextEvent)
+		server.process_departure(nextEvent)
 
 		print(server.mean_queue_length)
 		print(server.mean_server_util)
