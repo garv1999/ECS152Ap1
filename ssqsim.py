@@ -87,9 +87,10 @@ class SingleServerQueue:
 # main functions
 server = SingleServerQueue(0.2, 1)
 for i in range(100000):
-	nextEvent = server.gel.remove_node(server.gel.head.data)
+	nextEvent = server.gel.head.data
+	server.gel.remove_node(nextEvent)
 	# same are transmission time for an event or size for a baguette
-	if (nextEvent.event_time == ARRIVAL):
+	if (nextEvent.event_type == ARRIVAL):
 		process_arrival(nextEvent)
 	else:
 		process_departure(nextEvent)
