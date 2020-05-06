@@ -70,7 +70,7 @@ class LinkedList:
 
 		for node in self:
 			if node.data == target_node_data:
-				if (node is not self.tail) new_node.next = node.next
+				new_node.next = node.next
 				new_node.prev = node
 				node.next = new_node
 				return
