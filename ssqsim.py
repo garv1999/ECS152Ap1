@@ -7,8 +7,6 @@ ARRIVAL = 0
 DEPARTURE = 1
 
 class Event:
-	next_event
-	event
 
 	# default constructor
 	def __init__(self, cur_time, service_time, event_type):
