@@ -93,6 +93,6 @@ for i in range(100000):
 	else:
 		server.process_departure(nextEvent)
 
-		print(server.mean_queue_length)
-		print(server.mean_server_util)
-		print(server.packets_dropped)
+print(server.mean_queue_length)
+print(server.mean_server_util)
+print(server.packets_dropped)
