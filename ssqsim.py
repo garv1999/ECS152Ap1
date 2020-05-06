@@ -27,8 +27,8 @@ class SingleServerQueue:
 		self.lam  			   = lam
 		self.time   	       = self.exponential_random(lam)
 		self.packets_dropped   = 0
-		self.gel.add_first(Node(Event(self.time, ARRIVAL)))
 		self.gel = LinkedList()
+		self.gel.add_first(Node(Event(self.time, ARRIVAL)))
 		self.buffer = deque(maxlen = MAXBUFFER)
 
 	@staticmethod
