@@ -21,7 +21,8 @@ class LinkedList:
 			self.tail = tnode if nodes.len() is 0 else hnode
 			for elem in nodes:
 				node.next = Node(data=elem)
-				node.next.prev = node
+				if (node.next is not None):
+					node.next.prev = node
 				node = node.next
 
 	def __repr__(self):
@@ -40,27 +41,36 @@ class LinkedList:
 			node = node.next
 
 	def add_first(self, node):
+		if not self.head:
+			self.head = node
+			self.tail = node
+			return
+
+		self.head.prev = node
 		node.next = self.head
-		node.next.prev = node
+		node.prev = None
 		self.head = node
 
 	def add_last(self, node):
 		if not self.head:
 			self.head = node
+			self.tail = node
 			return
-		for current_node in self:
-			pass
 
-		current_node.next = node
-		node.prev = current_node
+		node.prev = self.tail
+		node.prev.next = node
+		self.tail = node
 
 	def add_after(self, target_node_data, new_node):
 		if not self.head:
 			raise Exception("List is empty")
 
+		if self.tail.data == target_node_data:
+			return self.add_last(new_node)
+
 		for node in self:
 			if node.data == target_node_data:
-				new_node.next = node.next
+				if (node is not self.tail) new_node.next = node.next
 				new_node.prev = node
 				node.next = new_node
 				return
@@ -80,6 +90,7 @@ class LinkedList:
 				prev_node.next = new_node
 				new_node.prev = prev_node
 				new_node.next = node
+				node.prev = new_node
 				return
 			prev_node = node
 
