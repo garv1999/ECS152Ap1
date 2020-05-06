@@ -78,7 +78,7 @@ class LinkedList:
 		for node in self:
 			if node.data == target_node_data:
 				prev_node.next = new_node
-				\=.prev = prev_node
+				new_node.prev = prev_node
 				new_node.next = node
 				return
 			prev_node = node
