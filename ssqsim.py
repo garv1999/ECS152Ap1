@@ -24,7 +24,7 @@ class SingleServerQueue:
 		self.mean_server_util  = 0
 		self.mu 		       = 1
 		self.lam  			   = lam
-		self.time   	       = exponential_random(self.lam) # current time
+		self.time   	       = self.exponential_random(self.lam)
 		self.packets_dropped   = 0
 		self.gel.add_first(Node(Event(self.time, ARRIVAL)))
 		self.gel = LinkedList()
