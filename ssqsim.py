@@ -8,8 +8,11 @@ from linkedlist import *
 ARRIVAL = 0
 DEPARTURE = 1
 
-class Event:
+def exponential_random(var):
+	u = random()
+	return (-1/var)* log(1-u)
 
+class Event:
 	# default constructor
 	def __init__(self, cur_time, service_time, event_type):
 		self.service_time = service_time
@@ -31,11 +34,6 @@ class SingleServerQueue:
 		self.gel = LinkedList()
 		self.gel.head = Node(Event(self.time, exponential_random(self.mu), ARRIVAL))
 		self.buffer = deque(maxlen = MAXBUFFER)
-
-	@staticmethod
-	def exponential_random(var):
-		u = random()
-		return (-1/var)* log(1-u)
 
 	def add_to_gel(self, event):
 		if (gel.is_empty):
