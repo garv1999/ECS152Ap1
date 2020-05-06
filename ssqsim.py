@@ -10,7 +10,7 @@ DEPARTURE = 1
 
 def exponential_random(var):
 	u = random()
-	return (-1/var)* log(1-u)
+	return (-1.0/float(var)) * log(1.0-u)
 
 class Event:
 	# default constructor
@@ -63,13 +63,13 @@ class SingleServerQueue:
 				self.buffer.append(event)
 
 				self.sum_queue_length += len(self.buffer)
-				self.mean_queue_length = sum_queue_length / self.time
-				self.mean_server_util = server_busy_time / self.time
+				self.mean_queue_length = float(sum_queue_length) / float(self.time)
+				self.mean_server_util = float(server_busy_time) / float(self.time)
 
 	def process_departure(self, event):
 		self.time = event.event_time
-		self.mean_queue_length = self.sum_queue_length / self.time
-		self.mean_server_util = self.server_busy_time / self.time
+		self.mean_queue_length = float(self.sum_queue_length) / float(self.time)
+		self.mean_server_util = float(self.server_busy_time) / float(self.time)
 
 		if (len(self.buffer) > 0):
 
@@ -80,10 +80,10 @@ class SingleServerQueue:
 			self.add_to_gel(departure_event)
 
 			self.sum_queue_length += len(self.buffer)
-			self.mean_queue_length = self.sum_queue_length / self.time
+			self.mean_queue_length = float(self.sum_queue_length) / float(self.time)
 
 # main functions
-server = SingleServerQueue(0.2, 1)
+server = SingleServerQueue(0.3, 20)
 for i in range(100000):
 	nextEvent = server.gel.head.data
 	server.gel.remove_node(nextEvent)
