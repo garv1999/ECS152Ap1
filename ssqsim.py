@@ -29,7 +29,7 @@ class SingleServerQueue:
 		self.time   	       = self.exponential_random(lam)
 		self.packets_dropped   = 0
 		self.gel = LinkedList()
-		self.gel.head = Node(Event(self.time, self.exponential_random(mu), ARRIVAL))
+		self.gel.head = Node(Event(self.time, self.exponential_random(self.mu), ARRIVAL))
 		self.buffer = deque(maxlen = MAXBUFFER)
 
 	@staticmethod
