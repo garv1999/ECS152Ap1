@@ -109,7 +109,7 @@ class LinkedList:
 		if not self.head:
 			raise Exception("List is empty")
 
-		if not self.head.next:
+		if self.head.data == target_node_data and not self.head.next:
 			self.head = None
 			self.tail = None
 			return
