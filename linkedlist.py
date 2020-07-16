@@ -1,5 +1,4 @@
-# code from https://realpython.com/linked-lists-python/
-# adapted into doubly linked list
+# adapted from https://realpython.com/linked-lists-python/
 
 class Node:
 	def __init__(self, data):
@@ -15,15 +14,17 @@ class LinkedList:
 		self.head = None
 		self.tail = None
 		if nodes is not None:
-			hnode = Node(data=nodes.pop(0))
-			tnode = Node(data=nodes.pop())
-			self.head = hnode
-			self.tail = tnode if nodes.len() is 0 else hnode
+			self.head = Node(data=nodes.pop(0))
+			self.tail = self.head if nodes.len() is 0 else Node(data=nodes.pop())
+
+			# at this point, nodes = 1 to n-1
+			node = self.head
 			for elem in nodes:
 				node.next = Node(data=elem)
 				if (node.next is not None):
 					node.next.prev = node
-				node = node.next
+					node = node.next
+			self.tail.prev = node
 
 	def __repr__(self):
 		node = self.head
@@ -37,14 +38,18 @@ class LinkedList:
 	def __iter__(self):
 		node = self.head
 		while node is not None:
+			#yield: return this node, but come back 2 where we left off
 			yield node
 			node = node.next
 
 	def add_first(self, node):
+		# if self is empty
 		if not self.head:
 			self.head = node
 			self.tail = node
-			return
+		else if node.prev or node.next:
+			raise Exception("Trying to add node from within list")
+			
 
 		self.head.prev = node
 		node.next = self.head

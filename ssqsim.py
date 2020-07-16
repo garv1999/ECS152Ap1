@@ -98,7 +98,7 @@ for i in range(10):
 
 mean_server_util = (float)(server.server_busy_time)/(float)(server.time)
 
-#print(server.server_busy_time)
+print(server.server_busy_time)
 print(mean_queue_length)
 print(mean_server_util * 100.0)
 print(server.packets_dropped)
