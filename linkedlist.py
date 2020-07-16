@@ -59,11 +59,13 @@ class LinkedList:
 		if not self.head:
 			self.head = node
 			self.tail = node
-			return
-
-		node.prev = self.tail
-		node.prev.next = node
-		self.tail = node
+		else if node.prev or node.next:
+			raise Exception("Trying to add node from within list")
+		else:
+			node.prev = self.tail
+			self.tail.next = node
+			node.next = None
+			self.tail = node
 
 	def add_after(self, target_node_data, new_node):
 		if not self.head:
