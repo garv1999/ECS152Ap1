@@ -48,7 +48,7 @@ class LinkedList:
 			self.head = node
 			self.tail = node
 		else if node.prev or node.next:
-			raise Exception("Trying to add node from within list")
+			raise Exception("Can't add node from within list")
 		else:
 			self.head.prev = node
 			node.next = self.head
@@ -60,7 +60,7 @@ class LinkedList:
 			self.head = node
 			self.tail = node
 		else if node.prev or node.next:
-			raise Exception("Trying to add node from within list")
+			raise Exception("Can't add node from within list")
 		else:
 			node.prev = self.tail
 			self.tail.next = node
@@ -93,9 +93,9 @@ class LinkedList:
 		prev_node = self.head
 		for node in self:
 			if node.data == target_node_data:
-				prev_node.next = new_node
-				new_node.prev = prev_node
-				new_node.next = node
+				prev_node.prev = new_node
+				new_node.next = prev_node
+				new_node.prev = node
 				node.prev = new_node
 				return
 			prev_node = node
@@ -111,10 +111,12 @@ class LinkedList:
 
 		if self.head.data == target_node_data:
 			self.head = self.head.next
+			self.head.prev = None
 			return
 
 		if self.tail.data == target_node_data:
 			self.tail = self.tail.prev
+			self.tail.next = None
 			return
 
 		previous_node = self.head
