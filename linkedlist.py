@@ -103,11 +103,16 @@ class LinkedList:
 		raise Exception("Node with data '%s' not found" % target_node_data)
 
 	def is_empty(self):
-		return self.head is None
+		return not self.head
 
 	def remove_node(self, target_node_data):
 		if not self.head:
 			raise Exception("List is empty")
+
+		if not self.head.next:
+			self.head = None
+			self.tail = None
+			return
 
 		if self.head.data == target_node_data:
 			self.head = self.head.next
