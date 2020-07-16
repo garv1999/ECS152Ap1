@@ -59,7 +59,7 @@ class LinkedList:
 		if not self.head:
 			self.head = node
 			self.tail = node
-		else if node.prev or node.next:
+		elif node.prev or node.next:
 			raise Exception("Can't add node from within list")
 		else:
 			node.prev = self.tail
